@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { UsernameStep } from "@/src/components/onboarding/username"
@@ -18,6 +18,7 @@ import {
 import { Review } from "@/src/components/onboarding/review"
 import { useRouter } from 'next/navigation'
 import { handleOnboardingSubmission } from '@/utils/onboarding'
+import { createClient } from "@/utils/supabase/client"
 
 interface UserData {
   username: string;
@@ -37,6 +38,7 @@ interface UserData {
 
 const OnboardingPage = () => {
   const router = useRouter();
+  const supabase = createClient();
   const [currentStep, setCurrentStep] = useState(0);
   const [userData, setUserData] = useState<UserData>({
     username: "",
@@ -54,6 +56,33 @@ const OnboardingPage = () => {
     }
   })
   
+  useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      // Get current user
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      
+      if (authError || !user) {
+        console.error('Error getting user:', authError)
+        router.push('/login')
+        return
+      }
+
+      // Check onboarding status
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('is_onboarded')
+        .eq('user_id', user.id)
+        .single()
+
+      if (!userError && userData?.is_onboarded) {
+        router.push('/dashboard')
+        return
+      }
+    }
+
+    checkOnboardingStatus()
+  }, [])
+
   const handleComplete = async () => {
     try {
       const result = await handleOnboardingSubmission(userData);

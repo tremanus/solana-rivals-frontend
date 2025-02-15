@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Trophy, User, ChevronLeft } from "lucide-react"
+import { Trophy, Settings, ChevronLeft, Home } from "lucide-react"
 import { NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
 import { createClient } from "@/utils/supabase/client"
@@ -12,9 +12,11 @@ import {
   SidebarFooter,
   SidebarRail,
   SidebarTrigger,
+  useSidebar
 } from "@/components/ui/sidebar"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { state } = useSidebar()
   const [userData, setUserData] = React.useState<{
     name: string;
     email: string;
@@ -56,55 +58,115 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const navItems = [
     {
+      title: "Home",
+      url: "/dashboard",
+      icon: Home,
+      isActive: false,
+    },
+    {
       title: "Leaderboard",
       url: "/leaderboard",
       icon: Trophy,
       isActive: false,
     },
     {
-      title: "About",
-      url: "/about",
-      icon: User,
+      title: "Agent Settings",
+      url: "/agent-settings",
+      icon: Settings,
       isActive: false,
     },
   ];
 
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <div className="relative">
-        <SidebarTrigger className="absolute right-2 top-2 p-2 hover:bg-white/5 rounded-lg">
-          <ChevronLeft className="h-5 w-5" />
+    <Sidebar 
+      collapsible="icon" 
+      {...props}
+      style={{
+        background: 'linear-gradient(145deg, #000000, #111111)',
+        borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+        color: '#FFFFFF',
+        overflow: 'hidden'
+      }}
+      className="!overflow-hidden"
+    >
+      <div style={{ position: 'relative', overflow: 'hidden' }}>
+        <SidebarTrigger 
+          style={{
+            position: 'absolute',
+            right: '0.5rem',
+            top: '0.5rem',
+            padding: '0.5rem',
+            borderRadius: '0.5rem',
+            color: '#FFFFFF',
+            backgroundColor: 'transparent',
+            transition: 'all 0.2s ease'
+          }}
+          className="hover:!bg-white/10 hover:!text-white"
+        >
+          <ChevronLeft style={{ height: '1.25rem', width: '1.25rem' }} />
         </SidebarTrigger>
+        <div 
+          style={{ 
+            borderBottom: '1px solid rgba(255, 255, 255, 0.5)',
+            marginTop: '3rem'
+          }} 
+        />
       </div>
-      <SidebarContent className="pt-16">
+      <SidebarContent 
+        style={{ 
+          paddingTop: '1rem', 
+          color: '#FFFFFF',
+          overflow: 'hidden'
+        }}
+      >
         <NavMain items={navItems} />
-        <div className="flex flex-col mt-8">
-          <div className="pr-4 flex justify-end">
-            <Image
-              src="/logo.png"
-              alt="Solana Rivals Logo"
-              width={240}
-              height={240}
-              className="rounded-full"
-              style={{ marginBottom: '-1rem', marginTop: '4rem' }}
-            />
+        {state === "expanded" && (
+          <div className="flex flex-col mt-20 overflow-hidden">
+            <div className="pl-0 flex justify-start" style={{ overflow: 'visible' }}>
+              <Image
+                src="/logo.png"
+                alt="Solana Rivals Logo"
+                width={350}
+                height={350}
+                className="rounded-full transition-all duration-300"
+                style={{ 
+                  marginTop: '3.5rem',
+                  marginLeft: '-4rem',
+                  filter: `
+                    drop-shadow(0px 1px 1px rgba(255, 255, 255, 0.07))
+                    drop-shadow(0px -1px 1px rgba(0, 0, 0, 0.5))
+                    drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.05))
+                  `,
+                  maxWidth: 'none',
+                  overflow: 'visible',
+                  opacity: 0.9,
+                  transition: 'filter 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.filter = `
+                    drop-shadow(0px 1px 2px rgba(255, 255, 255, 0.1))
+                    drop-shadow(0px -1px 1px rgba(0, 0, 0, 0.6))
+                    drop-shadow(0px 0px 3px rgba(255, 255, 255, 0.08))
+                  `
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.filter = `
+                    drop-shadow(0px 1px 1px rgba(255, 255, 255, 0.07))
+                    drop-shadow(0px -1px 1px rgba(0, 0, 0, 0.5))
+                    drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.05))
+                  `
+                }}
+              />
+            </div>
           </div>
-          <div 
-            className="text-center w-full"
-            style={{ 
-              fontFamily: 'Audiowide, cursive',
-              color: '#1A0033',
-              fontSize: '3rem',
-              lineHeight: '3.5rem',
-              textShadow: '0 0 10px rgba(255,255,255,0.3)'
-            }}
-          >
-            <div>Solana</div>
-            <div>Rivals</div>
-          </div>
-        </div>
+        )}
       </SidebarContent>
-      <SidebarFooter className="border-t border-white/10">
+      <SidebarFooter 
+        style={{ 
+          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+          color: '#FFFFFF'
+        }}
+      >
         {userData && (
           <NavUser 
             user={{
@@ -115,7 +177,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           />
         )}
       </SidebarFooter>
-      <SidebarRail />
+      <SidebarRail style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }} />
     </Sidebar>
   )
 }

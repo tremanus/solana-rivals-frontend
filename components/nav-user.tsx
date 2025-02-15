@@ -31,15 +31,13 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string
-    email: string
-    avatar: string
-  }
-}) {
+interface User {
+  name: string
+  email: string
+  avatar: string
+}
+
+export function NavUser({ user }: { user: User }) {
   const { isMobile } = useSidebar()
   const router = useRouter()
   const supabase = createClient()
@@ -57,7 +55,12 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              style={{
+                backgroundColor: 'transparent',
+                color: '#FFFFFF',
+                transition: 'all 0.2s ease'
+              }}
+              className="hover:!bg-white/10 hover:!text-white data-[state=open]:!bg-white/10"
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
@@ -65,13 +68,18 @@ export function NavUser({
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate text-xs text-white/70">{user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-black border-white/10"
+            style={{
+              backgroundColor: 'black',
+              borderColor: 'rgba(255, 255, 255, 0.1)',
+              color: 'white'
+            }}
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
@@ -83,21 +91,24 @@ export function NavUser({
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-semibold text-white">{user.name}</span>
+                  <span className="truncate text-xs text-white/70">{user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator className="bg-white/10" />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Settings />
+              <DropdownMenuItem className="hover:!bg-white/10 hover:!text-white text-white">
+                <Settings className="mr-2" />
                 Settings
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
-              <LogOut />
+            <DropdownMenuSeparator className="bg-white/10" />
+            <DropdownMenuItem 
+              onClick={handleLogout}
+              className="hover:!bg-white/10 hover:!text-white text-white"
+            >
+              <LogOut className="mr-2" />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

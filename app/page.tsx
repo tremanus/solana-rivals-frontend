@@ -1,6 +1,7 @@
 "use client";;
 import Image from "next/image";
 import React, { useEffect, useState } from 'react';
+import { useRouter } from "next/navigation";
 
 interface Candlestick {
   id: string;
@@ -152,6 +153,8 @@ const AnimatedBackground: React.FC = () => {
 };
 
 const Home: React.FC = () => {
+  const router = useRouter();
+
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-[#051B2C] via-[#062838] to-[#1E0B41] flex flex-col items-center justify-center font-sans overflow-hidden">
       <style>{`
@@ -173,7 +176,10 @@ const Home: React.FC = () => {
           <p className="text-3xl md:text-4xl text-purple-400 font-bold mb-8">
             CREATE YOUR OWN AI TRADING AGENTS!
           </p>
-          <button className="bg-purple-700 hover:bg-purple-800 text-white text-2xl font-bold px-16 py-4 rounded transform hover:scale-105 transition-all duration-200 shadow-lg uppercase">
+          <button 
+            onClick={() => router.push('/login')}
+            className="bg-purple-700 hover:bg-purple-800 text-white text-2xl font-bold px-16 py-4 rounded transform hover:scale-105 transition-all duration-200 shadow-lg uppercase"
+          >
             Join Now
           </button>
           <div className="mt-16 flex flex-col items-center gap-4">
