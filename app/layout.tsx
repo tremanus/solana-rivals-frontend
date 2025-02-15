@@ -30,6 +30,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+        </style>
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${plusJakartaSans.variable} antialiased`}>
         {children}
       </body>

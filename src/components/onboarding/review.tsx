@@ -20,14 +20,79 @@ interface ReviewProps {
   };
 }
 
-const behaviorLabels = {
-  liquidity: "Trading Volume",
-  projectHistory: "Track Record",
-  marketCap: "Market Size",
-  socialSentiment: "Sentiment",
-  whaleMovements: "Whale Activity",
-  riskTolerance: "Risk Level"
+const behaviorLabels: Record<string, { label: string; colors: [string, string] }> = {
+  liquidity: {
+    label: "Trading Speed",
+    colors: ['#00A3FF', '#0058AA']  // Blue
+  },
+  projectHistory: {
+    label: "Track Record",
+    colors: ['#FF6B6B', '#C92A2A']  // Red
+  },
+  marketCap: {
+    label: "Market Size",
+    colors: ['#51CF66', '#2B8A3E']  // Green
+  },
+  socialSentiment: {
+    label: "Sentiment",
+    colors: ['#FFD43B', '#F08C00']  // Yellow
+  },
+  whaleMovements: {
+    label: "Whale Activity",
+    colors: ['#CC5DE8', '#862E9C']  // Purple
+  },
+  riskTolerance: {
+    label: "Risk Level",
+    colors: ['#FF922B', '#D9480F']  // Orange
+  }
 };
+
+const barStyles = {
+  container: {
+    position: 'relative',
+    width: '180px',
+    height: '20px',
+    backgroundColor: '#1a1a1a',
+    borderRadius: '2px',
+    overflow: 'visible'
+  },
+  labelContainer: {
+    width: '120px',  // Fixed width for labels
+    textAlign: 'left' as const
+  },
+  barContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px'
+  },
+  fill: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    borderRadius: '2px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
+  },
+  shine: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '50%',
+    background: 'linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0))',
+    borderRadius: '2px'
+  },
+  value: {
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: '14px',
+    left: '100%',
+    marginLeft: '8px',
+    whiteSpace: 'nowrap'
+  }
+} as const;
 
 export function Review({ userData }: ReviewProps) {
   return (
@@ -41,42 +106,35 @@ export function Review({ userData }: ReviewProps) {
           {userData.avatar?.name?.toUpperCase() || "UNNAMED AGENT"}
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex justify-between p-6 relative min-h-[600px]">
+      <CardContent className="flex justify-between items-center p-6 relative min-h-[600px] gap-8">
         {/* Left Side - Stats Section */}
-        <div className="space-y-2 bg-[#0B1220] p-6 rounded-lg border border-white/10">
-          {Object.entries(behaviorLabels).map(([key, label]) => {
+        <div 
+          className="bg-[#0B1220] p-6 rounded-lg border border-white/10"
+          style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+        >
+          {Object.entries(behaviorLabels).map(([key, { label, colors }]) => {
             const value = userData.agentBehavior?.[key as keyof typeof userData.agentBehavior]?.slider || 0;
             return (
-              <div key={key} className="flex items-center gap-3">
-                <div className="w-44 text-base text-white font-medium">{label}</div>
-                <div className="relative w-[200px] h-5">
-                  {/* Background bar */}
-                  <div className="absolute inset-0 bg-[#1a1a1a] rounded-sm" />
-                  {/* Main blue bar */}
+              <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+                <div style={barStyles.labelContainer} className="text-base text-white font-medium">
+                  {label}
+                </div>
+                <div style={barStyles.container}>
                   <div 
-                    className="absolute inset-0 rounded-sm"
-                    style={{ 
+                    style={{
+                      ...barStyles.fill,
                       width: `${value}%`,
-                      background: 'linear-gradient(180deg, #4299E1 0%, #2B6CB0 100%)',
-                      boxShadow: '0 0 8px rgba(66, 153, 225, 0.5)'
+                      background: `linear-gradient(to bottom, ${colors[0]}, ${colors[1]})`
                     }}
-                  />
-                  {/* Lighter blue overlay */}
-                  <div 
-                    className="absolute inset-0 rounded-sm opacity-50"
-                    style={{ 
-                      width: `${value}%`,
-                      background: 'linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 50%)'
-                    }}
-                  />
-                  {/* Value box at the end */}
-                  <div 
-                    className="absolute -right-7 top-0 bottom-0 flex items-center"
                   >
-                    <div className="text-sm font-bold text-white">
-                      {value}
-                    </div>
+                    <div style={barStyles.value}>{value}</div>
                   </div>
+                  <div 
+                    style={{
+                      ...barStyles.shine,
+                      width: `${value}%`
+                    }}
+                  />
                 </div>
               </div>
             );
