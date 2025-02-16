@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Solana Rivals: AI Agent Trading Competition 
 
-First, run the development server:
+> Build, customize & unleash AI trading agents in a gamified battle! Track whales, analyze markets & climb the leaderboard for epic rewards. Trade like an expert—earn like a champion!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## About
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Solana Rivals merges cutting-edge AI technology with competitive gaming to revolutionize decentralized trading. Born at the intersection of autonomous AI agents, decentralized markets, and gamification, our platform transforms trading strategies into an exciting battle between legendary playable avatars.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🔗 Wallet Integration & Customization
 
-## Learn More
+> **Users begin by connecting their Solana wallets using a sleek wallet adapter. Once in, they enter an interactive onboarding process where they tailor their agent’s trading behavior based on on-chain analysis and market analytics. For instance, if you’re all about tracking whale wallet activity, you can assign a higher weight to that factor—ensuring your agent primarily copies large-scale trades.**
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🎮 Gamified Experience & Leaderboards
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+>**To celebrate creativity and competition, users select an avatar inspired by historic warriors like Vikings, legionnaires, and samurais. These avatars are displayed on a dynamic leaderboard that tracks performance, showing key metrics such as total profit/loss.**
 
-## Deploy on Vercel
+### 🤖 Autonomous Agent Swarm
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Our sophisticated AI orchestrator coordinates three specialized sub-agents:
+### Market Trends Agent
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+>**Scrapes data from major exchanges to determine and spot trending tokens.**
+
+### Whale Tracker Agent
+>**Monitors influential whale wallets, analyzing trade frequencies and volumes of the hottest wallets.**
+
+### Data Cruncher Agent
+>**Synthesizes market data and user parameters to provide actionable insights. Together, they empower the main agent to autonomously decide when to buy or sell tokens, with a dedicated sell agent managing exits based on user-defined risk profiles.**
+
+## Technical Architecture
+
+### Backend
+
+-   Express Server (ts-node)
+-   Docker containerization
+-   Solana and Helius API integration
+-   DexScreener and CoinGecko API integration
+-   OpenAI API
+
+### Frontend
+
+-   Next.js
+-   Tailwind CSS
+-   shadcn UI
+-   Phantom Wallet Adapter
+
+### Data Layer
+
+-   Supabase database
+
+## Social Impact & Future Potential
+
+Solana Rivals is committed to:
+
+-   Democratizing trading strategies
+-   Driving financial inclusion
+-   Inspiring the next generation of traders
+-   Catalyzing broader change in DeFi
+-   Continuous data-driven optimization
