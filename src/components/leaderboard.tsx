@@ -67,91 +67,78 @@ export function Leaderboard() {
   }
 
   return (
-    <div className="w-4/5 mx-auto bg-[#051B2C]/30 rounded-lg select-none" style={{ border: '2px solid white' }}>
-      <Table>
-        <TableHeader>
-          <TableRow className="hover:bg-transparent">
-            <TableHead 
-              className="text-white text-lg font-bold"
-              style={{ borderBottom: '2px solid white' }}
-            >
-              Agent
-            </TableHead>
-            <TableHead 
-              className="text-white text-lg font-bold"
-              style={{ paddingLeft: '32px' }}
-            >
-              Profit/Loss
-            </TableHead>
-            <TableHead 
-              className="text-white text-lg font-bold"
-              style={{ paddingLeft: '32px' }}
-            >
-              Wallet Address
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {agents.map((agent, index) => (
-            <TableRow key={agent.id} className="hover:bg-transparent">
-              <TableCell style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '48px',
-                padding: '16px 0',
-                paddingLeft: '16px'
+    <div style={{
+      width: '80%',
+      margin: '0 auto',
+      backgroundColor: '#1a1b1e',
+      borderRadius: '8px',
+      padding: '24px'
+    }}>
+      <h2 style={{
+        fontSize: '24px',
+        fontWeight: 'bold',
+        color: 'white',
+        marginBottom: '24px'
+      }}>
+        Top Performers
+      </h2>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {agents.map((agent, index) => (
+          <div 
+            key={agent.id} 
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              backgroundColor: '#25262b',
+              padding: '16px',
+              borderRadius: '8px'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              {/* Rank with trophy/medal styling */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                {index === 0 && <span style={{ fontSize: '20px' }}>🏆</span>}
+                {index === 1 && <span style={{ fontSize: '20px' }}>🥈</span>}
+                {index === 2 && <span style={{ fontSize: '20px' }}>🥉</span>}
+                <span style={{ color: 'white', marginLeft: '8px' }}>#{index + 1}</span>
+              </div>
+
+              {/* Agent info */}
+              <Avatar className="h-10 w-10 rounded-full">
+                <AvatarImage src={agent.rival} alt={agent.name} />
+                <AvatarFallback>{agent.name[0]}</AvatarFallback>
+              </Avatar>
+              <span style={{ color: 'white', fontWeight: 500 }}>{agent.name}</span>
+            </div>
+
+            {/* Right side info */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+              <span style={{ 
+                fontSize: '18px',
+                fontWeight: 500,
+                color: agent.plPercentage >= 0 ? '#4ade80' : '#ef4444'
               }}>
-                <span style={{ 
-                  fontSize: '24px',
-                  fontFamily: 'Space Grotesk',
-                  fontWeight: '700',
-                  letterSpacing: '-0.02em',
-                  color: 'white',
-                  textShadow: '0 0 10px rgba(255, 255, 255, 0.2)'
-                }}>
-                  #{index + 1}
-                </span>
-                <Avatar className="h-12 w-12 rounded-none">
-                  <AvatarImage src={agent.rival} alt={`Rival ${agent.name}`} />
-                  <AvatarFallback>{agent.name[0]}</AvatarFallback>
-                </Avatar>
-                <span style={{ 
-                  fontWeight: '500',
-                  color: 'white',
-                  fontSize: '18px'
-                }}>
-                  {agent.name}
-                </span>
-              </TableCell>
-              <TableCell 
-                style={{ 
-                  color: agent.plPercentage >= 0 ? '#4ade80' : '#ef4444',
-                  paddingLeft: '32px',
-                  fontWeight: '500'
-                }}
-              >
                 {agent.plPercentage >= 0 ? '+' : '-'}${Math.abs(agent.plPercentage).toLocaleString('en-US', {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
                 })}
-              </TableCell>
-              <TableCell 
+              </span>
+              <span 
                 style={{ 
+                  color: 'rgba(255, 255, 255, 0.5)',
                   fontFamily: 'monospace',
-                  fontSize: '14px',
-                  color: 'rgba(255, 255, 255, 0.6)',
-                  paddingLeft: '32px',
                   cursor: 'pointer'
                 }}
                 onClick={() => copyToClipboard(agent.walletAddress)}
                 title="Click to copy"
               >
                 {agent.walletAddress}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

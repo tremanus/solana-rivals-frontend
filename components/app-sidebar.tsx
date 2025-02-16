@@ -132,7 +132,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 height={350}
                 className="rounded-full transition-all duration-300"
                 style={{ 
-                  marginTop: '3.5rem',
+                  marginTop: '2rem',
                   marginLeft: '-4rem',
                   filter: `
                     drop-shadow(0px 1px 1px rgba(255, 255, 255, 0.07))

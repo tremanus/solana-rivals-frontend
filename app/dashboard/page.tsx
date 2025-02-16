@@ -18,6 +18,7 @@ import { Settings, Trophy } from "lucide-react";
 export default function DashboardPage() {
   const [agent, setAgent] = useState<{ card: string; name: string } | null>(null);
   const [stars, setStars] = useState<Array<{top: string, left: string, animationDelay: string}>>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     // Generate stars only on client-side
@@ -26,6 +27,13 @@ export default function DashboardPage() {
       left: `${Math.random() * 100}%`,
       animationDelay: `${Math.random() * 3}s`
     })))
+
+    // Add loading timeout
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1000)
+
+    return () => clearTimeout(timer)
   }, [])
 
   const starStyles = {
@@ -107,106 +115,118 @@ export default function DashboardPage() {
 
           {/* Main content */}
           <div className="max-w-7xl mx-auto p-6 relative z-10">
-            <div className="flex justify-center items-start gap-16">
-              {/* Left Side - Rank and Wallet */}
-              <div className="flex flex-col gap-8 mt-20">
-                <div style={starStyles.componentBackground}>
-                  <Wallet />
-                </div>
-                <div style={starStyles.componentBackground}>
-                  <Rank />
-                </div>
-                {/* Action Buttons */}
-                <div className="flex gap-4">
-                  <Link href="/leaderboard" className="flex-1">
-                    <Button 
-                      className="w-full bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10 transition-all"
-                      style={{ 
-                        fontFamily: 'Courier, monospace',
-                        padding: '20px',
-                        fontSize: '16px',
-                        height: 'auto',
-                        whiteSpace: 'normal',
-                        lineHeight: '1.2'
-                      }}
-                    >
-                      <div className="flex flex-col items-center">
-                        <div className="flex items-center mb-1">
-                          <Trophy className="mr-2 h-5 w-5" />
-                          <span>Leaderboard</span>
-                        </div>
-                        <span className="text-sm opacity-80">Check Rankings</span>
-                      </div>
-                    </Button>
-                  </Link>
-                  <Link href="/agent-settings" className="flex-1">
-                    <Button 
-                      className="w-full bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10 transition-all"
-                      style={{ 
-                        fontFamily: 'Courier, monospace',
-                        padding: '20px',
-                        fontSize: '16px',
-                        height: 'auto',
-                        whiteSpace: 'normal',
-                        lineHeight: '1.2'
-                      }}
-                    >
-                      <div className="flex flex-col items-center">
-                        <div className="flex items-center mb-1">
-                          <Settings className="mr-2 h-5 w-5" />
-                          <span>Preferences</span>
-                        </div>
-                        <span className="text-sm opacity-80">Edit Behaviors</span>
-                      </div>
-                    </Button>
-                  </Link>
-                </div>
+            {isLoading ? (
+              <div className="w-4/5 mx-auto h-2 bg-[#051B2C]/30 rounded-full overflow-hidden">
+                <div className="h-full bg-white animate-[loading_1s_ease-in-out_infinite]" 
+                  style={{
+                    width: '30%',
+                    animation: 'loading 1s ease-in-out infinite',
+                    background: 'linear-gradient(90deg, transparent, white, transparent)',
+                  }}
+                />
               </div>
-
-              {/* Right Side - Agent Data */}
-              <div className="flex flex-col items-center">
-                {agent && (
-                  <div style={{
-                    ...starStyles.componentBackground,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    padding: '24px'
-                  }}>
-                    <div 
-                      className="text-5xl font-bold mb-4 text-white"
-                      style={{ 
-                        fontFamily: 'Courier, monospace',
-                        textAlign: 'center',
-                        width: '100%'
-                      }}
-                    >
-                      {agent.name}
-                    </div>
-                    <div className="relative w-[400px] h-[400px] mb-4">
-                      <video
-                        src={`/${agent.card}.mp4`}
-                        width={400}
-                        height={400}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="rounded-lg"
-                        style={{
-                          objectFit: 'cover'
-                        }}
-                      />
-                    </div>
+            ) : (
+              <div className="flex justify-center items-start gap-16">
+                {/* Left Side - Rank and Wallet */}
+                <div className="flex flex-col gap-8 mt-10">
+                  <div style={starStyles.componentBackground}>
+                    <Rank />
                   </div>
-                )}
-                
-                {/* Stats Section */}
-                <div className="w-fit" style={starStyles.componentBackground}>
-                  <Stats />
+                  <div style={starStyles.componentBackground}>
+                    <Wallet />
+                  </div>
+                  {/* Action Buttons */}
+                  <div className="flex gap-4">
+                    <Link href="/leaderboard" className="flex-1">
+                      <Button 
+                        className="w-full bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10 transition-all"
+                        style={{ 
+                          fontFamily: 'Courier, monospace',
+                          padding: '20px',
+                          fontSize: '16px',
+                          height: 'auto',
+                          whiteSpace: 'normal',
+                          lineHeight: '1.2'
+                        }}
+                      >
+                        <div className="flex flex-col items-center">
+                          <div className="flex items-center mb-1">
+                            <Trophy className="mr-2 h-5 w-5" />
+                            <span>Leaderboard</span>
+                          </div>
+                          <span className="text-sm opacity-80">Check Rankings</span>
+                        </div>
+                      </Button>
+                    </Link>
+                    <Link href="/agent-settings" className="flex-1">
+                      <Button 
+                        className="w-full bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10 transition-all"
+                        style={{ 
+                          fontFamily: 'Courier, monospace',
+                          padding: '20px',
+                          fontSize: '16px',
+                          height: 'auto',
+                          whiteSpace: 'normal',
+                          lineHeight: '1.2'
+                        }}
+                      >
+                        <div className="flex flex-col items-center">
+                          <div className="flex items-center mb-1">
+                            <Settings className="mr-2 h-5 w-5" />
+                            <span>Preferences</span>
+                          </div>
+                          <span className="text-sm opacity-80">Edit Behaviors</span>
+                        </div>
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Right Side - Agent Data */}
+                <div className="flex flex-col items-center">
+                  {agent && (
+                    <div style={{
+                      ...starStyles.componentBackground,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      padding: '24px'
+                    }}>
+                      <div 
+                        className="text-5xl font-bold mb-4 text-white"
+                        style={{ 
+                          fontFamily: 'Courier, monospace',
+                          textAlign: 'center',
+                          width: '100%'
+                        }}
+                      >
+                        {agent.name}
+                      </div>
+                      <div className="relative w-[400px] h-[400px] mb-4">
+                        <video
+                          src={`/${agent.card}.mp4`}
+                          width={400}
+                          height={400}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="rounded-lg"
+                          style={{
+                            objectFit: 'cover'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Stats Section */}
+                  <div className="w-fit" style={starStyles.componentBackground}>
+                    <Stats />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </SidebarInset>

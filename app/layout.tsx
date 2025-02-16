@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import "@/src/styles/wallet-adapter.css";
 import { Toaster } from 'sonner'
 
 const geistSans = Geist({
