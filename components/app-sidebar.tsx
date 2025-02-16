@@ -27,14 +27,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const fetchUserData = async () => {
       const supabase = createClient();
       
-      // Get auth user data
       const { data: { user }, error: authError } = await supabase.auth.getUser();
       if (authError || !user) {
         console.error('Error getting user:', authError);
         return;
       }
 
-      // Get username from users table
       const { data: userData, error: userError } = await supabase
         .from('users')
         .select('username')
@@ -90,25 +88,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       className="!overflow-hidden"
     >
       <div style={{ position: 'relative', overflow: 'hidden' }}>
-        <SidebarTrigger 
-          style={{
-            position: 'absolute',
-            right: '0.5rem',
-            top: '0.5rem',
-            padding: '0.5rem',
-            borderRadius: '0.5rem',
-            color: '#FFFFFF',
-            backgroundColor: 'transparent',
-            transition: 'all 0.2s ease'
-          }}
-          className="hover:!bg-white/10 hover:!text-white"
-        >
-          <ChevronLeft style={{ height: '1.25rem', width: '1.25rem' }} />
-        </SidebarTrigger>
+        <div className="flex items-center justify-between px-4 pt-4">
+          {state === "expanded" && (
+            <h1 className="text-xl font-bold text-white">
+              Solana Rivals
+            </h1>
+          )}
+          <SidebarTrigger 
+            style={{
+              padding: '0.5rem',
+              borderRadius: '0.5rem',
+              color: '#FFFFFF',
+              backgroundColor: 'transparent',
+              transition: 'all 0.2s ease'
+            }}
+            className={`hover:!bg-white/10 hover:!text-white ${state === "collapsed" ? "ml-auto" : ""}`}
+          >
+            <ChevronLeft style={{ height: '1.25rem', width: '1.25rem' }} />
+          </SidebarTrigger>
+        </div>
         <div 
           style={{ 
             borderBottom: '1px solid rgba(255, 255, 255, 0.5)',
-            marginTop: '3rem'
+            marginTop: '1rem'
           }} 
         />
       </div>

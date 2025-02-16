@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/sidebar";
 import { Wallet } from "@/src/components/wallet";
 import { Rank } from "@/src/components/rank";
+import Link from "next/link";
+import { Settings, Trophy } from "lucide-react";
 
 export default function DashboardPage() {
   const [agent, setAgent] = useState<{ card: string; name: string } | null>(null);
@@ -113,6 +115,51 @@ export default function DashboardPage() {
                 </div>
                 <div style={starStyles.componentBackground}>
                   <Rank />
+                </div>
+                {/* Action Buttons */}
+                <div className="flex gap-4">
+                  <Link href="/leaderboard" className="flex-1">
+                    <Button 
+                      className="w-full bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10 transition-all"
+                      style={{ 
+                        fontFamily: 'Courier, monospace',
+                        padding: '20px',
+                        fontSize: '16px',
+                        height: 'auto',
+                        whiteSpace: 'normal',
+                        lineHeight: '1.2'
+                      }}
+                    >
+                      <div className="flex flex-col items-center">
+                        <div className="flex items-center mb-1">
+                          <Trophy className="mr-2 h-5 w-5" />
+                          <span>Leaderboard</span>
+                        </div>
+                        <span className="text-sm opacity-80">Check Rankings</span>
+                      </div>
+                    </Button>
+                  </Link>
+                  <Link href="/agent-settings" className="flex-1">
+                    <Button 
+                      className="w-full bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10 transition-all"
+                      style={{ 
+                        fontFamily: 'Courier, monospace',
+                        padding: '20px',
+                        fontSize: '16px',
+                        height: 'auto',
+                        whiteSpace: 'normal',
+                        lineHeight: '1.2'
+                      }}
+                    >
+                      <div className="flex flex-col items-center">
+                        <div className="flex items-center mb-1">
+                          <Settings className="mr-2 h-5 w-5" />
+                          <span>Preferences</span>
+                        </div>
+                        <span className="text-sm opacity-80">Edit Behaviors</span>
+                      </div>
+                    </Button>
+                  </Link>
                 </div>
               </div>
 
