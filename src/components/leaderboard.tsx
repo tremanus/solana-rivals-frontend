@@ -40,7 +40,7 @@ export const fetchAndSortAgents = async () => {
     id: agent.user_id,
     rival: `${agent.card}.png`,
     name: agent.name,
-    plPercentage: [23.71, -8.61, -7.85][index], // Directly assign values based on index
+    plPercentage: [23.71, 62.85, -7.85][index], // Directly assign values based on index
     walletAddress: `0x${agent.user_id.slice(0, 4)}...${agent.user_id.slice(-4)}`
   }))
 

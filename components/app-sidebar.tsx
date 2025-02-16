@@ -141,7 +141,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   `,
                   maxWidth: 'none',
                   overflow: 'visible',
-                  opacity: 0.9,
+                  opacity: 0.2,
                   transition: 'filter 0.3s ease'
                 }}
                 onMouseEnter={(e) => {
