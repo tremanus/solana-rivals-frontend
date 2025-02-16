@@ -165,16 +165,13 @@ const Home: React.FC = () => {
       `}</style>
       <AnimatedBackground />
       <div className="relative z-10">
-        <main className="text-center px-4 flex flex-col items-center gap-8">
+        <main className="text-center px-4 flex flex-col items-center gap-10">
           <h1 className="title-font flex flex-col text-7xl md:text-9xl font-bold text-white tracking-wider leading-nonemb-8">
             <span className="mt-20">SOLANA</span>
             <span className="mt-[0em]">RIVALS</span>
           </h1>
-          <p className="text-2xl md:text-3xl text-white font-medium uppercase tracking-wide">
-            First ever weekly trading competition
-          </p>
-          <p className="text-3xl md:text-4xl text-purple-400 font-bold mb-8">
-            CREATE YOUR OWN AI TRADING AGENTS!
+          <p className="text-3xl md:text-4xl text-purple-400 font-bold mb-4">
+            CUSTOMIZE & COMPETE WITH YOUR AI CRYPTO TRADER!
           </p>
           <button 
             onClick={() => router.push('/login')}
