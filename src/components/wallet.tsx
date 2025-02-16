@@ -76,15 +76,19 @@ export function Wallet() {
           $17,382.82
         </div>
 
-        {/* Profit Stats */}
-        <div style={styles.profitContainer}>
-          <span style={styles.profitText}>+$1,399.22</span>
-          <span style={styles.profitPercentage}>+13.3%</span>
-        </div>
+       {/* Profit Stats */}
+<div style={styles.profitContainer}>
+  <span style={styles.profitText}>+$1,399.22</span>
+  <span style={styles.profitPercentage} className="flex items-center gap-1">
+    +3.71 <img src="/solana.png" alt="SOL" className="w-5 h-5" />
+  </span>
+</div>
 
         {/* SOL Balance */}
         <div style={styles.solBalance}>
-          68.94 SOL
+          <span className="flex items-center justify-center gap-2">
+            68.94 <img src="/solana.png" alt="SOL" className="w-5 h-5" />
+          </span>
         </div>
       </div>
 
@@ -106,18 +110,22 @@ export function Wallet() {
             className="flex-1 py-8 bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10 transition-all"
             style={{ 
               fontFamily: 'Courier, monospace',
-              fontSize: '12px',
+              fontSize: '16px',
+              padding: '16px',
               whiteSpace: 'nowrap',
               borderRadius: '12px'
             }}
           >
-            Withdraw SOL
+            <span className="flex items-center gap-2">
+              Convert to <img src="/solana.png" alt="SOL" className="w-4 h-4" />
+            </span>
           </Button>
           <Button 
             className="flex-1 py-8 bg-white/5 hover:bg-white/10 text-white font-medium border border-white/10 transition-all"
             style={{ 
               fontFamily: 'Courier, monospace',
-              fontSize: '12px',
+              fontSize: '16px',
+              padding: '16px',
               whiteSpace: 'nowrap',
               borderRadius: '12px'
             }}
